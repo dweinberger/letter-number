@@ -1,0 +1,32 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "davidjoho",
+    "longName": "Letter:Number so simple",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/letternumber.png",
+                "menuIcon": true,
+                "name": "28x28",
+                "type": "png"
+            },
+            {
+                "file": "fonts/Verdana.ttf",
+                "name": "VERDANA_38",
+                "type": "font"
+            }
+        ]
+    },
+    "sdkVersion": "2",
+    "shortName": "Letter:Number",
+    "uuid": "1e7e9e5e-c305-47e1-bcd2-eb27c770da1d",
+    "versionCode": 1,
+    "versionLabel": "0.8",
+    "watchapp": {
+        "watchface": true
+    }
+}
