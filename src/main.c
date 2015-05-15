@@ -113,9 +113,9 @@ void window_load(Window *window)
  
 void window_unload(Window *window)
 {
-   text_layer_destroy(text_layer);
-    ext_layer_destroy(text_layer_date);
-   inverter_layer_destroy(inv_layer);
+    text_layer_destroy(text_layer);
+    text_layer_destroy(text_layer_date);
+    inverter_layer_destroy(inv_layer);
 }
  
 void init()
