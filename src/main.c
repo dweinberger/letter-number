@@ -1,8 +1,15 @@
+// Letter:Number watchface. Shows hour as a word and the minute as a number, which I
+//    I find easier to read.
+//    I am a hobbyist. This code is undoubtedly embarrassing.
+//    Nevertheless, it is licensed under a GNU 2.0 license. Use whatever bit of it
+//    you might find helpful.
+//     - David Weinberger. May 15, 2015 david@weinberger.org
+//
+// Thank you: https://ninedof.wordpress.com/2013/12/02/pebble-sdk-2-0-tutorial-1-your-first-watchapp/
+
+
 #include <pebble.h>
- // Thank you: https://ninedof.wordpress.com/2013/12/02/pebble-sdk-2-0-tutorial-1-your-first-watchapp/
 
-
-  
 Window *window;
 TextLayer *text_layer;
 InverterLayer *inv_layer;
@@ -16,8 +23,7 @@ char datebuff[] ="ee00/00/2015";
 
 void tick_handler(struct tm *tick_time, TimeUnits units_changed)
 {
-    //Format the buffer string using tick_time as the time source
-    //strftime(buffer, sizeof("00:00"), "%H:%M", tick_time);
+    
     // get the hour as a string
     strftime(hourasnumbbuff, sizeof("00"), "%H", tick_time);
   if ( (!strcmp(hourasnumbbuff, "01")) || (!strcmp(hourasnumbbuff, "13")) ){
@@ -63,9 +69,7 @@ void tick_handler(struct tm *tick_time, TimeUnits units_changed)
     text_layer_set_text(text_layer, fullbuff);
   
    // change date layer
-  //strftime(s_date_text, sizeof(s_date_text), "%B %e", tick_time);
-  //text_layer_set_text(s_date_layer, s_date_text);
-  static char s_date_text[] = "Xxxxxxxxx 00";
+    static char s_date_text[] = "Xxxxxxxxx 00";
     strftime(s_date_text, sizeof(s_date_text), "%B %e", tick_time);
     text_layer_set_text(text_layer_date, s_date_text);
   
@@ -85,48 +89,32 @@ void window_load(Window *window)
   text_layer_set_font(text_layer_date, fonts_get_system_font(FONT_KEY_ROBOTO_CONDENSED_21));
   
   
- 
-  // strftime(datebuff, sizeof("ee00/00/2015"), strcat(hourstring,"\n%M"), tick_time);
-  // strcat(datebuff,"11/22/1234");
-  //text_layer_set_text(text_layer_date, datebuff);
-  
-  //Get a time structure so that the face doesn't start blank
-  //struct tm *t;
-  //time_t temp;
-  //temp = time(NULL);
-  //t = localtime(&temp);
- 
-  //Manually call the tick handler when the window is loading
-  //tick_handler(t, MINUTE_UNIT);
-  // format it
-  //text_layer = text_layer_create(GRect(0, 53, 132, 168));
-  
   // Create Time layer
   text_layer = text_layer_create(GRect(0, 0, 132, 168));
   text_layer_set_background_color(text_layer, GColorClear);
   text_layer_set_text_color(text_layer, GColorBlack);
   text_layer_set_text_alignment(text_layer, GTextAlignmentCenter);
-  //FONT_KEY_BITHAM_30_BLACK
-    // load font
+  
+  // load external (non-system) font
   ResHandle font_handle = resource_get_handle(RESOURCE_ID_VERDANA_38);
   text_layer_set_font(text_layer, fonts_load_custom_font(font_handle));
-  //text_layer_set_font(text_layer, fonts_get_system_font(FONT_KEY_BITHAM_30_BLACK));
    
   //add  hour/min layer
   layer_add_child(window_get_root_layer(window), (Layer*) text_layer);
   // add date layer
   layer_add_child(window_get_root_layer(window), (Layer*) text_layer_date);
   
-  //Inverter layer
+  //Inverter layer so the background is black
   inv_layer = inverter_layer_create(GRect(0, 0, 200,200));
   //inv_layer = inverter_layer_create(GRect(0, 50, 144, 62));
   layer_add_child(window_get_root_layer(window), (Layer*) inv_layer);
-  //layer_add_child(window_get_root_layer(window), (Layer*) text_layer_date);
+
 }
  
 void window_unload(Window *window)
 {
    text_layer_destroy(text_layer);
+    ext_layer_destroy(text_layer_date);
    inverter_layer_destroy(inv_layer);
 }
  
@@ -144,8 +132,7 @@ void init()
  
 void deinit()
 {
-  //text_layer_destroy(text_layer);
- window_destroy(window);
+   window_destroy(window);
   tick_timer_service_unsubscribe();
   
 }
