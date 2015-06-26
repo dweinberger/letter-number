@@ -39,7 +39,7 @@ static void battery_handler(BatteryChargeState charge_state) {
   if (charge_state.is_charging) {
     snprintf(battery_text, sizeof(battery_text), "charging");
  } else {
-   snprintf(battery_text, sizeof(battery_text), "%d%%", charge_state.charge_percent);
+   snprintf(battery_text, sizeof(battery_text), "%d%%",charge_state.charge_percent);
   }
  text_layer_set_text(s_battery_layer, battery_text);
   
@@ -75,8 +75,8 @@ static void battery_handler(BatteryChargeState charge_state) {
   if (batterypercent == 90){
      s_batteryimg_bitmap = gbitmap_create_with_resource(RESOURCE_ID_battery90);
   }
-  if (batterypercent == 100){
-     s_batteryimg_bitmap = gbitmap_create_with_resource(RESOURCE_ID_battery00);
+  if (batterypercent > 90){
+     s_batteryimg_bitmap = gbitmap_create_with_resource(RESOURCE_ID_battery99);
   }
   if (charge_state.is_charging){
       s_batteryimg_bitmap = gbitmap_create_with_resource(RESOURCE_ID_batterych);
@@ -174,11 +174,9 @@ void window_load(Window *window)
  text_layer_set_background_color(s_battery_layer, GColorClear);
  text_layer_set_font(s_battery_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
  text_layer_set_text_alignment(s_battery_layer, GTextAlignmentCenter);
-  text_layer_set_text(s_battery_layer, "-");
+  //text_layer_set_text(s_battery_layer, "-");
   
   // create battery image layer
-  // temp battery image to load
-  //s_batteryimg_bitmap = gbitmap_create_with_resource(RESOURCE_ID_batterych);
   s_bitmap_layer = bitmap_layer_create(GRect(70, 00, 89, 07));
   //bitmap_layer_set_bitmap(s_bitmap_layer, s_batteryimg_bitmap );
    // check battery
